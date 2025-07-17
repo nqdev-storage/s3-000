@@ -57,25 +57,26 @@ jobs:
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
 
-      - name: Deploy to GitHub Pages
+      - name: Checkout gh-pages branch
         run: |
-          # Checkout nhánh gh-pages (nếu chưa có, tạo mới)
           git fetch --all
-          git checkout gh-pages || git checkout --orphan gh-pages
+          git checkout gh-pages || git checkout --orphan gh-pages  # Tạo nhánh mới nếu chưa có
 
-          # Xoá tất cả các file cũ trên nhánh gh-pages
+      - name: Remove old files
+        run: |
+          # Xóa tất cả file cũ trong nhánh gh-pages
           rm -rf *
 
-          # Copy build output vào thư mục gốc
-          # cp -r ./build/* .  # Nếu bạn dùng React, Angular, hoặc bất kỳ công cụ build nào tạo thư mục build/
-          # cp -r ./* .
+      - name: Copy code from main to gh-pages
+        run: |
+          # Copy toàn bộ nội dung từ nhánh main sang nhánh gh-pages
+          cp -r ./* .  # Copy tất cả file và thư mục từ thư mục hiện tại vào nhánh gh-pages
 
-          # Thêm tất cả các file và commit thay đổi
+      - name: Commit and push changes to gh-pages
+        run: |
           git add -A
-          git commit -m "Deploy to GitHub Pages for release ${GITHUB_REF_NAME}"
-
-          # Push lên nhánh gh-pages
-          git push origin gh-pages
+          git commit -m "Deploy to GitHub Pages for release ${GITHUB_REF_NAME}" || echo "No changes to commit"
+          git push origin gh-pages  # Đẩy mã lên nhánh gh-pages
 
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Sử dụng token mặc định của GitHub Actions
