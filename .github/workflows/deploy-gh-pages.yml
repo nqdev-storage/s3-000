@@ -70,6 +70,7 @@ jobs:
       - name: Copy code from main to gh-pages
         run: |
           # Copy toàn bộ nội dung từ nhánh main sang nhánh gh-pages
+          ls -la ./*
           cp -r ./* .  # Copy tất cả file và thư mục từ thư mục hiện tại vào nhánh gh-pages
 
       - name: Commit and push changes to gh-pages
