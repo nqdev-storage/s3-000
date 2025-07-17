@@ -67,11 +67,10 @@ jobs:
           # Xóa tất cả file cũ trong nhánh gh-pages
           rm -rf *
 
-      - name: Copy code from main to gh-pages
+      - name: Checkout content from main to gh-pages
         run: |
-          # Copy toàn bộ nội dung từ nhánh main sang nhánh gh-pages
-          ls -la ./*
-          cp -r ./* .  # Copy tất cả file và thư mục từ thư mục hiện tại vào nhánh gh-pages
+          # Checkout code từ nhánh 'main' vào thư mục hiện tại
+          git checkout ${{ env.BRANCH }} -- .  # Lấy toàn bộ nội dung từ nhánh main về thư mục làm việc hiện tại
 
       - name: Commit and push changes to gh-pages
         run: |
