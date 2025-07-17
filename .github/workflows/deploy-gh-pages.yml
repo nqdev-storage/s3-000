@@ -1,0 +1,82 @@
+name: Deploy to GitHub Pages
+run-name: "Deploy to GitHub Pages for ${{ github.event.release.tag_name }}"
+
+on:
+  workflow_dispatch: # ✅ Cho phép chạy thủ công
+  release:
+    # created : # ✅ Chỉ chạy khi release được tạo
+    # published: # ✅ Chỉ chạy khi release được phát hành
+    types: [published] # ✅ Chỉ chạy khi release được phát hành
+
+# Remove all permissions by default
+permissions: write-all # ⚠️ Nếu không cần ghi tất cả, bạn nên dùng principle of least privilege
+
+env:
+  SERVER: production
+  BRANCH: ${{ github.ref_name }}
+  REPOSITORY: ${{ github.repository }}
+  # ✅ Default nếu không đọc từ file VERSION
+  VERSION: ${{ ((github.ref_type == 'branch' && github.ref_name == 'main') || (github.ref_type == 'tag')) && format('1.0.{0}', github.run_number) || format('1.0.{0}-dev', github.run_number) }}
+  REPO_NAME: # ✅ Sẽ được gán động trong steps
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # ✅ Sử dụng token mặc định của GitHub Actions
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "20" # Sử dụng phiên bản Node.js bạn cần
+
+      # - name: Install dependencies
+      #   run: npm install
+
+      # - name: Build project
+      #   run: npm run build # Thực hiện build (hoặc thay thế lệnh này tùy thuộc vào công cụ bạn dùng)
+
+  report-build-status:
+    needs: build # Chỉ chạy sau khi job build hoàn thành
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+  deploy:
+    needs: build # Chỉ chạy sau khi job build hoàn thành
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Git
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+
+      - name: Checkout gh-pages branch
+        run: |
+          git fetch --all
+          git checkout gh-pages || git checkout --orphan gh-pages  # Tạo nhánh mới nếu chưa có
+
+      - name: Remove old files
+        run: |
+          # Xóa tất cả file cũ trong nhánh gh-pages
+          rm -rf *
+
+      - name: Checkout content from main to gh-pages
+        run: |
+          # Checkout code từ nhánh 'main' vào thư mục hiện tại
+          git checkout ${{ env.BRANCH }} -- .  # Lấy toàn bộ nội dung từ nhánh main về thư mục làm việc hiện tại
+
+      - name: Commit and push changes to gh-pages
+        run: |
+          git add -A
+          git commit -m "Deploy to GitHub Pages for release ${GITHUB_REF_NAME}" || echo "No changes to commit"
+          git push origin gh-pages  # Đẩy mã lên nhánh gh-pages
+
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Sử dụng token mặc định của GitHub Actions
