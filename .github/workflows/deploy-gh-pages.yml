@@ -68,7 +68,7 @@ jobs:
 
           # Copy build output vào thư mục gốc
           # cp -r ./build/* .  # Nếu bạn dùng React, Angular, hoặc bất kỳ công cụ build nào tạo thư mục build/
-          cp -r ./* .
+          # cp -r ./* .
 
           # Thêm tất cả các file và commit thay đổi
           git add -A
