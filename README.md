@@ -19,97 +19,40 @@ Dự án này là một lựa chọn thay thế nhẹ nhàng và linh hoạt cho
 - **Hỗ trợ các tệp tin có kích thước lớn**: Tải lên và lưu trữ các tệp tin dung lượng lớn một cách hiệu quả.
 - **Bảo mật**: Tích hợp các cơ chế bảo mật cơ bản để đảm bảo tính toàn vẹn và an toàn của dữ liệu.
 
-## Cài đặt
+## 🔎 How to Open Raw File on GitHub
 
-### 1. Clone Repository
-Để bắt đầu sử dụng, bạn có thể clone repository về máy:
-```bash
-git clone https://github.com/nqdev-storage/s3-000.git
+[![Open Raw README](https://img.shields.io/badge/open_raw-README.md-blue.svg)](https://raw.githubusercontent.com/nqdev-storage/s3-001/main/README.md)
+[![Open Raw LICENSE](https://img.shields.io/badge/open_raw-LICENSE-blue.svg)](https://raw.githubusercontent.com/nqdev-storage/s3-001/main/LICENSE)
+
+Nếu bạn muốn xem **nội dung gốc (raw)** của file trong repo này, hãy làm theo hướng dẫn sau:
+
+1. Vào file mong muốn trong repo, ví dụ:
+   [LICENSE](https://github.com/nqdev-storage/s3-001/blob/main/LICENSE)
+
+2. Ở góc trên bên phải nội dung file, bấm vào nút **Raw**.
+
+   * Khi đó, GitHub sẽ mở file ở dạng text thuần (raw).
+   * Ví dụ file LICENSE raw:
+     👉 [https://raw.githubusercontent.com/nqdev-storage/s3-001/main/LICENSE](https://raw.githubusercontent.com/nqdev-storage/s3-001/main/LICENSE)
+
+3. Bạn có thể copy link raw này để:
+
+   * Chia sẻ trực tiếp
+   * Dùng trong script (curl, wget, import, v.v.)
+   * Hoặc tải về máy (Save As)
+
+### 📌 Ví dụ nhanh:
+
+* README.md raw:
+  [https://raw.githubusercontent.com/nqdev-storage/s3-001/main/README.md](https://raw.githubusercontent.com/nqdev-storage/s3-001/main/README.md)
+* LICENSE raw:
+  [https://raw.githubusercontent.com/nqdev-storage/s3-001/main/LICENSE](https://raw.githubusercontent.com/nqdev-storage/s3-001/main/LICENSE)
+
+Cú pháp link raw luôn có dạng:
+
 ```
-
-### 2. Cài đặt các phụ thuộc
-Cài đặt các thư viện phụ thuộc cần thiết thông qua `npm` hoặc `yarn`:
-```bash
-npm install
+https://raw.githubusercontent.com/<user>/<repo>/<branch>/<path-to-file>
 ```
-hoặc
-```bash
-yarn install
-```
-
-### 3. Cấu hình môi trường
-Đảm bảo rằng bạn đã cấu hình các biến môi trường cần thiết, ví dụ như thông tin kết nối tới cơ sở dữ liệu, API keys, hoặc các tham số cấu hình khác. Các biến môi trường này có thể được đặt trong file `.env`.
-
-### 4. Chạy ứng dụng
-Sau khi cài đặt xong, bạn có thể chạy ứng dụng bằng lệnh:
-```bash
-npm start
-```
-hoặc
-```bash
-yarn start
-```
-Ứng dụng sẽ được khởi chạy tại `http://localhost:3000` (hoặc port khác tùy vào cấu hình).
-
-## Sử dụng
-
-### Tải lên tệp tin
-Để tải một tệp tin lên hệ thống lưu trữ của **s3-000**, bạn có thể sử dụng API sau:
-```bash
-POST /upload
-Content-Type: multipart/form-data
-{
-  "file": <file_path>
-}
-```
-
-### Tải xuống tệp tin
-Để tải một tệp tin đã lưu trữ xuống, bạn có thể sử dụng API:
-```bash
-GET /download/<file_id>
-```
-
-### Xóa tệp tin
-Để xóa tệp tin khỏi hệ thống:
-```bash
-DELETE /delete/<file_id>
-```
-
-### Các API khác
-- `GET /files`: Lấy danh sách tất cả các tệp đã lưu trữ.
-- `GET /status`: Kiểm tra trạng thái của dịch vụ.
-
-## Cấu trúc dự án
-Dưới đây là cấu trúc thư mục của dự án:
-
-```bash
-s3-000/
-├── src/
-│   ├── controllers/
-│   ├── models/
-│   ├── routes/
-│   ├── services/
-│   └── app.js
-├── config/
-│   ├── config.js
-│   └── env.js
-├── public/
-├── package.json
-└── README.md
-```
-
-## Đóng góp
-Chúng tôi luôn hoan nghênh sự đóng góp từ cộng đồng. Nếu bạn muốn đóng góp vào dự án, hãy tạo một pull request hoặc mở issue nếu bạn phát hiện lỗi hoặc có đề xuất tính năng mới.
-
-### Các bước đóng góp
-1. Fork repository này.
-2. Tạo một nhánh mới (`git checkout -b feature-xyz`).
-3. Commit thay đổi của bạn (`git commit -am 'Add new feature xyz'`).
-4. Push lên nhánh của bạn (`git push origin feature-xyz`).
-5. Mở pull request để chúng tôi xem xét.
-
-## Giấy phép
-Dự án này sử dụng giấy phép [MIT License](LICENSE).
 
 ---
 
